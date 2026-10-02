@@ -117,46 +117,51 @@
     }
 
     /* ---------- OVERLAY DEGRADÊ (SÓ TOPO E RODAPÉ) ---------- */
+    /* ---------- OVERLAY DEGRADÊ (SCRIM COM TOPO E BASE) ---------- */
     .content {
       position: relative;
       z-index: 1;
       height: 100%;
+      min-height: 100svh;
       display: flex;
       flex-direction: column;
+      justify-content: flex-end;
     }
 
-    /* Degradê de baixo para o meio: escuro na base e transparente no meio */
+    /* Scrim: degradê vertical de baixo para cima (rgba(40,8,14,.92) até transparente a 65%) + topo suave */
     .content::before {
       content: '';
       position: absolute;
       inset: 0;
       z-index: 0;
       pointer-events: none;
-      background: linear-gradient(
-        to top,
-        rgba(26, 4, 8, 0.96) 0%,
-        rgba(40, 7, 13, 0.90) 18%,
-        rgba(58, 11, 20, 0.75) 32%,
-        rgba(74, 15, 26, 0.45) 44%,
-        rgba(74, 15, 26, 0.15) 54%,
-        transparent 65%,
-        transparent 100%
-      );
+      background:
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0%, transparent 18%),
+        linear-gradient(
+          to top,
+          rgba(40, 8, 14, 0.92) 0%,
+          rgba(40, 8, 14, 0.88) 20%,
+          rgba(40, 8, 14, 0.65) 38%,
+          rgba(40, 8, 14, 0.25) 52%,
+          rgba(40, 8, 14, 0.00) 65%,
+          transparent 100%
+        );
     }
 
+    /* Container único alinhado ao fundo */
     .content-inner {
       position: relative;
       z-index: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      height: 100%;
-      padding: calc(36px + var(--safe-top)) 24px calc(18px + var(--safe-bottom));
-      text-align: center;
+      justify-content: flex-end;
+      width: 100%;
       max-width: 480px;
       margin: 0 auto;
-      width: 100%;
+      padding: 0 20px calc(14px + var(--safe-bottom));
+      text-align: center;
+      gap: 0;
     }
 
     /* ---------- TEXTURA DE RUÍDO (DESKTOP) ---------- */
@@ -165,24 +170,27 @@
     }
 
     /* ==========================================================
-       HEADER — LOGO + TÍTULO (+15%, TEXT-SHADOW, DOURADO SÓLIDO) + SLOGAN
+       HEADER — LOGO + TÍTULO + SLOGAN (AGRUPADOS E COLADOS NOS BOTÕES)
        ========================================================== */
     .header {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 0;
       flex-shrink: 0;
+      width: 100%;
     }
 
-    /* Logo com anel dourado fino */
+    /* Logo com drop-shadow e anel dourado */
     .logo-ring {
-      width: 96px;
-      height: 96px;
+      width: clamp(96px, 16svh, 140px);
+      height: clamp(96px, 16svh, 140px);
       border-radius: 50%;
       padding: 3px;
       background: linear-gradient(135deg, var(--gold), var(--gold-light));
-      box-shadow: 0 6px 32px rgba(0,0,0,0.4);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+      filter: drop-shadow(0 6px 20px rgba(0,0,0,0.45));
+      margin-bottom: 8px;
       flex-shrink: 0;
     }
     .logo-ring img {
@@ -192,30 +200,32 @@
       object-fit: cover;
     }
 
-    /* Título: +15% de tamanho, text-shadow, Mendes em dourado sólido */
+    /* Título: clamp(30px, 5.2svh, 44px) + text-shadow + Mendes #E8B84A */
     .title {
       font-family: var(--font-serif);
       font-weight: 700;
-      font-size: 1.9rem;
-      line-height: 1.12;
+      font-size: clamp(30px, 5.2svh, 44px);
+      line-height: 1.1;
       color: var(--cream);
       letter-spacing: 0.01em;
-      text-shadow: 0 2px 14px rgba(0,0,0,0.6);
+      text-shadow: 0 2px 14px rgba(0,0,0,0.75), 0 1px 3px rgba(0,0,0,0.6);
+      margin-bottom: 4px;
     }
     .title .brand-gold {
-      color: var(--gold-light);
+      color: #E8B84A;
       font-style: normal;
       font-weight: 700;
     }
 
-    /* Slogan: Dancing Script robusto (mín. 26px no mobile), cor #F5E9D3, text-shadow */
+    /* Slogan: clamp(20px, 3.4svh, 28px) + text-shadow + 20px de respiro para indicadores */
     .slogan {
       font-family: var(--font-script);
-      font-size: clamp(1.65rem, 5.2vw, 1.95rem);
+      font-size: clamp(20px, 3.4svh, 28px);
       font-weight: 600;
       color: var(--cream-slogan);
       line-height: 1.2;
-      text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+      text-shadow: 0 2px 14px rgba(0,0,0,0.75), 0 1px 3px rgba(0,0,0,0.6);
+      margin-bottom: 20px;
     }
 
     /* ==========================================================
@@ -229,7 +239,7 @@
       flex-shrink: 0;
     }
 
-    /* Indicadores: traços 18px na base do hero, acima dos botões com 16px de respiro */
+    /* Indicadores: 16px de respiro para o primeiro botão */
     .indicators {
       display: flex;
       justify-content: center;
@@ -275,7 +285,7 @@
     .actions {
       display: flex;
       flex-direction: column;
-      gap: 9px;
+      gap: 8px;
       width: 100%;
       flex-shrink: 0;
     }
@@ -285,7 +295,7 @@
       align-items: center;
       gap: 12px;
       width: 100%;
-      min-height: 52px;
+      min-height: clamp(52px, 7svh, 60px);
       padding: 12px 18px;
       border-radius: 14px;
       font-family: var(--font-sans);
@@ -330,7 +340,7 @@
     .btn-filled .btn-icon { color: var(--wine-deep); }
     .btn-filled .btn-chevron { opacity: 0.65; color: var(--wine-deep); }
 
-    /* 2, 3 e 4. Botões de vidro: rgba(30,6,10,.55), blur(14px), borda dourada 70%, texto creme, ícone dourado vivo */
+    /* 2, 3 e 4. Botões de vidro */
     .btn-glass {
       background: var(--wine-glass);
       backdrop-filter: blur(14px) saturate(1.2);
@@ -351,7 +361,7 @@
       align-items: center;
       gap: 6px;
       flex-shrink: 0;
-      padding-top: 4px;
+      padding-top: 6px;
     }
     .copyright {
       font-size: 0.68rem;
@@ -359,9 +369,41 @@
       font-weight: 500;
       text-shadow: 0 1px 6px rgba(0,0,0,0.5);
     }
-      color: var(--cream-50);
-      font-weight: 500;
-      text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+
+    /* ==========================================================
+       TELAS BAIXAS (MAX-HEIGHT: 680px) — Redução de 10% e respiros pela metade
+       ========================================================== */
+    @media (max-width: 1023px) and (max-height: 680px) {
+      .content-inner {
+        padding-bottom: calc(8px + var(--safe-bottom));
+      }
+      .logo-ring {
+        width: clamp(80px, 14svh, 110px);
+        height: clamp(80px, 14svh, 110px);
+        margin-bottom: 4px;
+      }
+      .title {
+        font-size: clamp(24px, 4.5svh, 34px);
+        margin-bottom: 2px;
+      }
+      .slogan {
+        font-size: clamp(17px, 2.9svh, 22px);
+        margin-bottom: 10px;
+      }
+      .indicators {
+        margin-bottom: 8px;
+      }
+      .actions {
+        gap: 6px;
+      }
+      .btn {
+        min-height: clamp(44px, 6.2svh, 50px);
+        padding: 9px 14px;
+        font-size: 0.84rem;
+      }
+      .site-footer {
+        padding-top: 3px;
+      }
     }
 
     /* ==========================================================
