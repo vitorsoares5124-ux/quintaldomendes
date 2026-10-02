@@ -128,20 +128,23 @@
       align-items: center;
     }
 
-    /* Scrim com vinheta suave para destacar o bloco central */
+    /* Degradê de baixo para cima: escuro embaixo e transparente até o meio */
     .content::before {
       content: '';
       position: absolute;
       inset: 0;
       z-index: 0;
       pointer-events: none;
-      background:
-        radial-gradient(
-          ellipse at 50% 50%,
-          rgba(40, 8, 14, 0.72) 0%,
-          rgba(40, 8, 14, 0.84) 55%,
-          rgba(22, 4, 7, 0.94) 100%
-        );
+      background: linear-gradient(
+        to top,
+        rgba(26, 4, 8, 0.95) 0%,
+        rgba(40, 7, 13, 0.88) 18%,
+        rgba(58, 11, 20, 0.70) 32%,
+        rgba(74, 15, 26, 0.40) 44%,
+        rgba(74, 15, 26, 0.12) 54%,
+        transparent 64%,
+        transparent 100%
+      );
     }
 
     /* Bloco único centralizado no meio da tela */
@@ -478,6 +481,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: flex-start;
       }
       .content::before {
         content: '';
@@ -517,7 +521,7 @@
         height: auto;
         max-height: 94vh;
         margin: 0;
-        margin-left: 8vw;
+        margin-left: clamp(48px, 8vw, 120px);
         padding: 0;
         display: flex;
         flex-direction: column;
