@@ -116,8 +116,7 @@
       to   { transform: scale(1.00) translate(-0.8%, -0.3%); }
     }
 
-    /* ---------- OVERLAY DEGRADÊ (SÓ TOPO E RODAPÉ) ---------- */
-    /* ---------- OVERLAY DEGRADÊ (SCRIM COM TOPO E BASE) ---------- */
+    /* ---------- OVERLAY DEGRADÊ / SCRIM CENTRALIZADO ---------- */
     .content {
       position: relative;
       z-index: 1;
@@ -125,10 +124,11 @@
       min-height: 100svh;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
+      justify-content: center;
+      align-items: center;
     }
 
-    /* Scrim: degradê vertical de baixo para cima (rgba(40,8,14,.92) até transparente a 65%) + topo suave */
+    /* Scrim com vinheta suave para destacar o bloco central */
     .content::before {
       content: '';
       position: absolute;
@@ -136,30 +136,26 @@
       z-index: 0;
       pointer-events: none;
       background:
-        linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0%, transparent 18%),
-        linear-gradient(
-          to top,
-          rgba(40, 8, 14, 0.92) 0%,
-          rgba(40, 8, 14, 0.88) 20%,
-          rgba(40, 8, 14, 0.65) 38%,
-          rgba(40, 8, 14, 0.25) 52%,
-          rgba(40, 8, 14, 0.00) 65%,
-          transparent 100%
+        radial-gradient(
+          ellipse at 50% 50%,
+          rgba(40, 8, 14, 0.72) 0%,
+          rgba(40, 8, 14, 0.84) 55%,
+          rgba(22, 4, 7, 0.94) 100%
         );
     }
 
-    /* Container único alinhado ao fundo */
+    /* Bloco único centralizado no meio da tela */
     .content-inner {
       position: relative;
       z-index: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: center;
       width: 100%;
       max-width: 480px;
       margin: 0 auto;
-      padding: 0 20px calc(14px + var(--safe-bottom));
+      padding: calc(16px + var(--safe-top)) 20px calc(16px + var(--safe-bottom));
       text-align: center;
       gap: 0;
     }
